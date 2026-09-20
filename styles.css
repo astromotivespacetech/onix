@@ -309,7 +309,8 @@ img, svg { display: block; max-width: 100%; }
     linear-gradient(var(--signal-stroke), var(--signal-stroke)),
     linear-gradient(var(--signal-stroke), var(--signal-stroke));
   background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  background-position: bottom left, bottom left;
+  /* Same Y math as .e.bottom: top + (corner - line) = 100% - line */
+  background-position: left calc(var(--signal-corner) - var(--signal-line)), left top;
 }
 
 .signal-frame .c.br {
@@ -319,17 +320,21 @@ img, svg { display: block; max-width: 100%; }
     linear-gradient(var(--signal-stroke), var(--signal-stroke)),
     linear-gradient(var(--signal-stroke), var(--signal-stroke));
   background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  background-position: bottom right, bottom right;
+  background-position: right calc(var(--signal-corner) - var(--signal-line)), right top;
 }
 
 /*
-  Mid-edges grow clockwise with width/height (not scale).
-  Bottom stroke uses top: calc(100% - 1px) — same math as the bottom corners.
+  Mid-edges grow clockwise.
+  Bottom/left pin BOTH ends (left+right / top+bottom) so the free end
+  cannot round to a different device pixel than the locked end.
 */
 .signal-frame .e {
   position: absolute;
   background: var(--signal-stroke);
-  transition: width 0.45s var(--ease), height 0.45s var(--ease);
+  transition:
+    width 0.45s var(--ease),
+    height 0.45s var(--ease),
+    transform 0.45s var(--ease);
 }
 
 .signal-frame .e.top {
@@ -348,18 +353,22 @@ img, svg { display: block; max-width: 100%; }
 
 .signal-frame .e.bottom {
   top: calc(100% - var(--signal-line));
+  left: calc(var(--signal-corner) - var(--signal-overlap));
   right: calc(var(--signal-corner) - var(--signal-overlap));
-  left: auto;
+  width: auto;
   height: var(--signal-line);
-  width: 0;
+  transform: scaleX(0);
+  transform-origin: right center;
 }
 
 .signal-frame .e.left {
   left: 0;
+  top: calc(var(--signal-corner) - var(--signal-overlap));
   bottom: calc(var(--signal-corner) - var(--signal-overlap));
-  top: auto;
   width: var(--signal-line);
-  height: 0;
+  height: auto;
+  transform: scaleY(0);
+  transform-origin: center bottom;
 }
 
 .signal-label {
@@ -375,17 +384,23 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .signal:hover .signal-frame .e.top,
-.signal:focus-visible .signal-frame .e.top,
-.signal:hover .signal-frame .e.bottom,
-.signal:focus-visible .signal-frame .e.bottom {
+.signal:focus-visible .signal-frame .e.top {
   width: var(--signal-mid);
 }
 
 .signal:hover .signal-frame .e.right,
-.signal:focus-visible .signal-frame .e.right,
+.signal:focus-visible .signal-frame .e.right {
+  height: var(--signal-mid);
+}
+
+.signal:hover .signal-frame .e.bottom,
+.signal:focus-visible .signal-frame .e.bottom {
+  transform: scaleX(1);
+}
+
 .signal:hover .signal-frame .e.left,
 .signal:focus-visible .signal-frame .e.left {
-  height: var(--signal-mid);
+  transform: scaleY(1);
 }
 
 .signal:hover .signal-label,
