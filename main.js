@@ -117,9 +117,9 @@
     submitBtn.disabled = true;
     setNote("Sending.");
 
-    /* Netlify Forms need urlencoded POST to "/". Multipart fetch often fails. */
+    /* Netlify Forms: urlencoded POST to a static HTML file Netlify scanned. */
     var payload = new URLSearchParams(new FormData(form)).toString();
-    var target = FORM_ENDPOINT || "/";
+    var target = FORM_ENDPOINT || "/form.html";
 
     fetch(target, {
       method: "POST",
@@ -131,8 +131,14 @@
         form.reset();
         setNote("Message sent. We answer every message.", "done");
       })
-      .catch(function () {
-        setNote("Send failed. Try again later.", "error");
+      .catch(function (err) {
+        var code = err && err.message ? err.message : "";
+        setNote(
+          code && /^\d+$/.test(code)
+            ? "Send failed (" + code + "). Try again later."
+            : "Send failed. Try again later.",
+          "error"
+        );
       })
       .finally(function () {
         submitBtn.disabled = false;
