@@ -1,0 +1,10 @@
+# Netlify — site root is this repo (website files at /)
+[build]
+  publish = "."
+  command = ""
+
+# Pretty URLs: /privacy → privacy.html
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200

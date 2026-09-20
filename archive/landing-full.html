@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Onix Lunar Corp — Unlock the lunar supply chain</title>
+<meta name="description" content="The Moon will supply the physical material needed to build the next generation of infrastructure in space. Kinetic launch enables this with the lowest cost per kg of material to low lunar orbit." />
+<meta name="theme-color" content="#07080a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Onix Lunar Corp — Unlock the lunar supply chain" />
+<meta property="og:description" content="The Moon will supply the physical material needed to build the next generation of infrastructure in space." />
+<meta property="og:image" content="assets/og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="image" href="assets/hero-1800.webp" imagesrcset="assets/hero-800.webp 800w, assets/hero-1200.webp 1200w, assets/hero-1800.webp 1800w, assets/hero-2560.webp 2560w" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip" href="#system">Skip to the system</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><span id="scroll-progress"></span></div>
+
+<header class="site-header" id="site-header">
+  <div class="shell header-inner">
+    <a class="wordmark" href="#top" aria-label="Onix Lunar Corp, home">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+        <path class="mark-limb" d="M1 22.6C8.2 26.4 19.8 26.4 27 22.6" />
+        <path class="mark-path" d="M5.4 21.6 21 6.6" />
+        <circle class="mark-dot" cx="23.6" cy="4.2" r="2.1" />
+      </svg>
+      <span class="wordmark-text">Onix</span>
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="#why">Why the Moon</a>
+      <a href="#system">System</a>
+      <a href="#customers">Customers</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <picture class="hero-plate">
+      <source type="image/webp"
+              srcset="assets/hero-800.webp 800w, assets/hero-1200.webp 1200w, assets/hero-1800.webp 1800w, assets/hero-2560.webp 2560w"
+              sizes="100vw" />
+      <img src="assets/hero-1800.jpg"
+           srcset="assets/hero-800.jpg 800w, assets/hero-1200.jpg 1200w, assets/hero-1800.jpg 1800w, assets/hero-2560.jpg 2560w"
+           sizes="100vw" alt="A gas gun on the lunar surface. The barrel runs along a ridge. Earth is above the horizon." fetchpriority="high" decoding="async" />
+    </picture>
+
+    <div class="shell hero-inner">
+      <h1 class="hero-title reveal">Unlock the lunar supply chain.</h1>
+      <p class="hero-lede reveal">
+        The Moon will supply the physical material needed to build the next generation of
+        infrastructure in space. Kinetic launch enables this with the lowest cost per kg of
+        material to low lunar orbit, full stop.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="button" href="#contact"><span>Contact us</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
+        </a>
+        <a class="link-quiet" href="#system">See the system</a>
+      </div>
+    </div>
+
+    <div class="shell hero-stats">
+      <ul class="stat-strip" id="stat-strip" aria-label="Headline numbers"></ul>
+    </div>
+  </section>
+
+  <!-- ── 01 Why the Moon ──────────────────────────────────── -->
+  <section class="section" id="why">
+    <div class="shell">
+      <p class="section-index reveal"><span>// 01</span> Why the Moon</p>
+      <h2 class="section-title reveal">The Moon removes the two hard problems.</h2>
+      <p class="section-lede reveal">
+        A launch from Earth must reach high speed and pass through air. A launch from the Moon
+        must reach low speed in vacuum. Low speed and no air let us use a gun. The gun stays on
+        the ground. Only the payload leaves.
+      </p>
+
+      <div class="bars" id="velocity-bars"></div>
+    </div>
+  </section>
+
+  <!-- ── 02 System ────────────────────────────────────────── -->
+  <section class="section section-alt" id="system">
+    <div class="shell">
+      <p class="section-index reveal"><span>// 02</span> The system</p>
+      <h2 class="section-title reveal">Gas pushes. Nothing burns.</h2>
+
+      <div class="system-grid">
+        <ol class="steps">
+          <li class="reveal">
+            <span class="step-num">01</span>
+            <div><h3>Charge</h3><p>We compress hydrogen in the breech.</p></div>
+          </li>
+          <li class="reveal">
+            <span class="step-num">02</span>
+            <div><h3>Release</h3><p>One large valve opens fast.</p></div>
+          </li>
+          <li class="reveal">
+            <span class="step-num">03</span>
+            <div><h3>Accelerate</h3><p>Gas pushes the projectile along the barrel to <b data-bind="inline.muzzle_velocity">&mdash;</b>.</p></div>
+          </li>
+          <li class="reveal">
+            <span class="step-num">04</span>
+            <div><h3>Circularize</h3><p>A cold-gas kick stage adds <b data-bind="inline.kick_delta_v">&mdash;</b> and closes the orbit.</p></div>
+          </li>
+          <li class="reveal">
+            <span class="step-num">05</span>
+            <div><h3>Recover</h3><p>We recapture the hydrogen. Lunar ice makes up the loss.</p></div>
+          </li>
+        </ol>
+
+        <figure class="trajectory reveal" aria-labelledby="trajectory-caption">
+          <svg viewBox="0 0 520 360" role="img" aria-label="Diagram. The gun fires from the lunar surface. The payload coasts up. A kick stage closes the orbit.">
+            <defs>
+              <linearGradient id="coast" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="var(--accent)" stop-opacity=".95" />
+                <stop offset="1" stop-color="var(--accent)" stop-opacity=".25" />
+              </linearGradient>
+            </defs>
+            <circle class="orbit" cx="260" cy="1470" r="1380" />
+            <circle class="limb" cx="260" cy="1470" r="1200" />
+            <line class="tick" x1="330" y1="104" x2="330" y2="270" />
+            <path class="strut" d="M100 264 L100 281 M140 242 L140 277" />
+            <rect class="breech" x="46" y="278" width="19" height="15" rx="1"
+                  transform="rotate(-28.6 56 286)" />
+            <path class="barrel" d="M60 286 L170 226" />
+            <path class="coast" d="M170 226 C 240 188, 285 92, 330 92" />
+            <path class="insertion" d="M330 92 A1380 1380 0 0 1 482 107" />
+            <path class="arrow" d="M478 100 L490 108 L477 114" />
+            <circle class="node node-muzzle" cx="170" cy="226" r="3.2" />
+            <circle class="node node-kick" cx="330" cy="92" r="4.4" />
+            <g class="figure-labels">
+              <text x="36" y="318">SURFACE</text>
+              <text class="label-muzzle" x="198" y="278" data-bind="inline.muzzle_velocity">&mdash;</text>
+              <text x="344" y="80" class="label-accent">KICK <tspan data-bind="inline.kick_delta_v">&mdash;</tspan></text>
+              <text x="146" y="84" class="label-orbit">LOW LUNAR ORBIT</text>
+            </g>
+          </svg>
+          <figcaption id="trajectory-caption">Surface to low lunar orbit. Not to scale.</figcaption>
+        </figure>
+      </div>
+
+      <dl class="spec-sheet" id="spec-sheet" aria-label="Baseline system"></dl>
+    </div>
+  </section>
+
+  <!-- ── 03 Customers ─────────────────────────────────────── -->
+  <section class="section" id="customers">
+    <div class="shell">
+      <p class="section-index reveal"><span>// 03</span> Customers</p>
+      <h2 class="section-title reveal">We move mass for producers on the Moon.</h2>
+      <p class="section-lede reveal">
+        Companies now plan to make propellant, metals, silicon, and bulk material on the lunar
+        surface. That mass has value in orbit. We deliver it.
+      </p>
+      <ul class="segments" id="segments"></ul>
+      <p class="pull reveal">If your product must leave the surface, talk to us.</p>
+    </div>
+  </section>
+
+  <!-- ── 04 Method ────────────────────────────────────────── -->
+  <section class="section section-alt" id="method">
+    <div class="shell">
+      <p class="section-index reveal"><span>// 04</span> Method</p>
+      <h2 class="section-title reveal">Every number here comes from one model.</h2>
+      <p class="section-lede reveal">
+        We keep one physics and cost model. The public figures are the LLO scale case,
+        rounded for copy. Unit cost is cash operating cost only — not CapEx recovery.
+        We share the assumptions and the sources with partners on request.
+      </p>
+      <p class="sync reveal">
+        <span class="pulse" aria-hidden="true"></span>
+        <span class="mono">Model <b data-bind="model.version">&mdash;</b> &middot; Path <b data-bind="model.path">&mdash;</b> &middot; Case <b data-bind="model.case">&mdash;</b> &middot; Synced <b data-bind="model.generated_utc">&mdash;</b></span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Contact ──────────────────────────────────────────── -->
+  <section class="section contact" id="contact">
+    <div class="shell contact-inner">
+      <div>
+        <p class="section-index reveal"><span>// 05</span> Contact</p>
+        <h2 class="section-title reveal">Tell us what you must move.</h2>
+        <p class="section-lede reveal">Write the mass, the destination, and the date. We answer every message.</p>
+      </div>
+
+      <form class="form reveal" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="f-org">Organization</label>
+          <input id="f-org" name="organization" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" rows="3" required placeholder="What mass, where to, and when."></textarea>
+        </div>
+
+        <button class="button button-wide" type="submit">
+          <span>Send</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
+        </button>
+        <p class="form-note" id="form-note" role="status" aria-live="polite">
+          We reply from a company address.
+          <a href="privacy.html">Privacy</a>
+        </p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <a class="wordmark wordmark-small" href="#top" aria-label="Onix Lunar Corp, home">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+        <path class="mark-limb" d="M1 22.6C8.2 26.4 19.8 26.4 27 22.6" />
+        <path class="mark-path" d="M5.4 21.6 21 6.6" />
+        <circle class="mark-dot" cx="23.6" cy="4.2" r="2.1" />
+      </svg>
+      <span class="wordmark-text">Onix Lunar Corp</span>
+    </a>
+    <p class="mono footer-note">
+      <a href="privacy.html">Privacy</a>
+      &middot; Lunar kinetic launch
+      &middot; <span id="year">2026</span>
+    </p>
+  </div>
+</footer>
+
+<script src="data/site.data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
