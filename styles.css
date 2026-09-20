@@ -248,7 +248,9 @@ img, svg { display: block; max-width: 100%; }
 
 .signal {
   --signal-line: 1px;
+  --signal-corner: 11px;
   --signal-ink: rgba(188, 212, 255, 0.55);
+  --signal-stroke: #bcd4ff;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -265,49 +267,103 @@ img, svg { display: block; max-width: 100%; }
   position: absolute;
   inset: 0;
   pointer-events: none;
+  /* Opacity once on the whole frame so 1px overlaps do not double-darken. */
+  opacity: 0.55;
 }
 
+/* Corner L-marks: same 1px fills as the mid-edges (no CSS borders). */
 .signal-frame .c {
   position: absolute;
-  width: 11px;
-  height: 11px;
-  border-color: var(--signal-ink);
-  border-style: solid;
-  border-width: 0;
+  width: var(--signal-corner);
+  height: var(--signal-corner);
+  background-repeat: no-repeat;
 }
 
-.signal-frame .tl { top: 0; left: 0; border-top-width: var(--signal-line); border-left-width: var(--signal-line); }
-.signal-frame .tr { top: 0; right: 0; border-top-width: var(--signal-line); border-right-width: var(--signal-line); }
-.signal-frame .bl { bottom: 0; left: 0; border-bottom-width: var(--signal-line); border-left-width: var(--signal-line); }
-.signal-frame .br { bottom: 0; right: 0; border-bottom-width: var(--signal-line); border-right-width: var(--signal-line); }
+.signal-frame .c.tl {
+  top: 0;
+  left: 0;
+  background-image:
+    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
+    linear-gradient(var(--signal-stroke), var(--signal-stroke));
+  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
+  background-position: top left, top left;
+}
 
-/* Mid-edges: same 1px ink; length only changes */
+.signal-frame .c.tr {
+  top: 0;
+  right: 0;
+  background-image:
+    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
+    linear-gradient(var(--signal-stroke), var(--signal-stroke));
+  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
+  background-position: top right, top right;
+}
+
+.signal-frame .c.bl {
+  bottom: 0;
+  left: 0;
+  background-image:
+    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
+    linear-gradient(var(--signal-stroke), var(--signal-stroke));
+  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
+  background-position: bottom left, bottom left;
+}
+
+.signal-frame .c.br {
+  bottom: 0;
+  right: 0;
+  background-image:
+    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
+    linear-gradient(var(--signal-stroke), var(--signal-stroke));
+  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
+  background-position: bottom right, bottom right;
+}
+
+/* Mid-edges: each starts at a corner and grows clockwise.
+   Overlap 1px into both corner caps so joins stay continuous. */
 .signal-frame .e {
+  --signal-overlap: 1px;
   position: absolute;
-  background: var(--signal-ink);
-  transition: width 0.45s var(--ease), height 0.45s var(--ease);
+  background: var(--signal-stroke);
+  transition: transform 0.45s var(--ease);
 }
 
 .signal-frame .e.top,
 .signal-frame .e.bottom {
-  left: 50%;
-  width: 0;
+  left: calc(var(--signal-corner) - var(--signal-overlap));
+  right: calc(var(--signal-corner) - var(--signal-overlap));
   height: var(--signal-line);
-  transform: translateX(-50%);
+  transform: scaleX(0);
 }
 
 .signal-frame .e.left,
 .signal-frame .e.right {
-  top: 50%;
+  top: calc(var(--signal-corner) - var(--signal-overlap));
+  bottom: calc(var(--signal-corner) - var(--signal-overlap));
   width: var(--signal-line);
-  height: 0;
-  transform: translateY(-50%);
+  transform: scaleY(0);
 }
 
-.signal-frame .e.top { top: 0; }
-.signal-frame .e.bottom { bottom: 0; }
-.signal-frame .e.left { left: 0; }
-.signal-frame .e.right { right: 0; }
+/* Clockwise: TL→TR, TR→BR, BR→BL, BL→TL */
+.signal-frame .e.top {
+  top: 0;
+  transform-origin: left center;
+}
+
+.signal-frame .e.right {
+  right: 0;
+  transform-origin: center top;
+}
+
+.signal-frame .e.bottom {
+  bottom: 0;
+  transform-origin: right center;
+}
+
+.signal-frame .e.left {
+  left: 0;
+  transform-origin: center bottom;
+}
 
 .signal-label {
   position: relative;
@@ -325,14 +381,14 @@ img, svg { display: block; max-width: 100%; }
 .signal:hover .signal-frame .e.bottom,
 .signal:focus-visible .signal-frame .e.top,
 .signal:focus-visible .signal-frame .e.bottom {
-  width: calc(100% - 22px);
+  transform: scaleX(1);
 }
 
 .signal:hover .signal-frame .e.left,
 .signal:hover .signal-frame .e.right,
 .signal:focus-visible .signal-frame .e.left,
 .signal:focus-visible .signal-frame .e.right {
-  height: calc(100% - 22px);
+  transform: scaleY(1);
 }
 
 .signal:hover .signal-label,
