@@ -263,82 +263,73 @@ img, svg { display: block; max-width: 100%; }
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  transform: translateZ(0);
 }
 
 .signal-frame {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* Opacity once on the whole frame so 1px overlaps do not double-darken. */
   opacity: 0.55;
 }
 
-/* Corner L-marks — top/left only so bottom/right rounding cannot diverge. */
-.signal-frame .c {
-  position: absolute;
-  width: var(--signal-corner);
-  height: var(--signal-corner);
-  background-repeat: no-repeat;
-}
-
-.signal-frame .c.tl {
-  top: 0;
-  left: 0;
-  background-image:
-    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
-    linear-gradient(var(--signal-stroke), var(--signal-stroke));
-  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  background-position: top left, top left;
-}
-
-.signal-frame .c.tr {
-  top: 0;
-  left: calc(100% - var(--signal-corner));
-  background-image:
-    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
-    linear-gradient(var(--signal-stroke), var(--signal-stroke));
-  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  background-position: top right, top right;
-}
-
-.signal-frame .c.bl {
-  top: calc(100% - var(--signal-corner));
-  left: 0;
-  background-image:
-    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
-    linear-gradient(var(--signal-stroke), var(--signal-stroke));
-  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  /* Same Y math as .e.bottom: top + (corner - line) = 100% - line */
-  background-position: left calc(var(--signal-corner) - var(--signal-line)), left top;
-}
-
-.signal-frame .c.br {
-  top: calc(100% - var(--signal-corner));
-  left: calc(100% - var(--signal-corner));
-  background-image:
-    linear-gradient(var(--signal-stroke), var(--signal-stroke)),
-    linear-gradient(var(--signal-stroke), var(--signal-stroke));
-  background-size: var(--signal-corner) var(--signal-line), var(--signal-line) var(--signal-corner);
-  background-position: right calc(var(--signal-corner) - var(--signal-line)), right top;
-}
-
 /*
-  Mid-edges grow clockwise.
-  Bottom/left pin BOTH ends (left+right / top+bottom) so the free end
-  cannot round to a different device pixel than the locked end.
+  Corner ticks and mid-edges share the SAME top/left formulas.
+  Bottom horizontal tick and .e.bottom both use top: calc(100% - 1px).
 */
+.signal-frame .tick {
+  position: absolute;
+  background: var(--signal-stroke);
+}
+
+.signal-frame .tick.ht {
+  width: var(--signal-corner);
+  height: var(--signal-line);
+}
+
+.signal-frame .tick.vt {
+  width: var(--signal-line);
+  height: var(--signal-corner);
+}
+
+.signal-frame .tick.ht.tl { top: 0; left: 0; }
+.signal-frame .tick.vt.tl { top: 0; left: 0; }
+
+.signal-frame .tick.ht.tr {
+  top: 0;
+  left: calc(100% - var(--signal-corner));
+}
+.signal-frame .tick.vt.tr {
+  top: 0;
+  left: calc(100% - var(--signal-line));
+}
+
+.signal-frame .tick.ht.bl {
+  top: calc(100% - var(--signal-line));
+  left: 0;
+}
+.signal-frame .tick.vt.bl {
+  top: calc(100% - var(--signal-corner));
+  left: 0;
+}
+
+.signal-frame .tick.ht.br {
+  top: calc(100% - var(--signal-line));
+  left: calc(100% - var(--signal-corner));
+}
+.signal-frame .tick.vt.br {
+  top: calc(100% - var(--signal-corner));
+  left: calc(100% - var(--signal-line));
+}
+
+/* Mid-edges: grow clockwise; overlap ticks by 1px. No scale on bottom/top Y. */
 .signal-frame .e {
   position: absolute;
   background: var(--signal-stroke);
-  transition:
-    width 0.45s var(--ease),
-    height 0.45s var(--ease),
-    transform 0.45s var(--ease);
+  transition: width 0.45s var(--ease), height 0.45s var(--ease);
 }
 
 .signal-frame .e.top {
-  top: 0;
+  top: 0; /* same as .tick.ht.tl / .tr */
   left: calc(var(--signal-corner) - var(--signal-overlap));
   height: var(--signal-line);
   width: 0;
@@ -346,29 +337,25 @@ img, svg { display: block; max-width: 100%; }
 
 .signal-frame .e.right {
   top: calc(var(--signal-corner) - var(--signal-overlap));
-  left: calc(100% - var(--signal-line));
+  left: calc(100% - var(--signal-line)); /* same as .tick.vt.tr */
   width: var(--signal-line);
   height: 0;
 }
 
 .signal-frame .e.bottom {
-  top: calc(100% - var(--signal-line));
-  left: calc(var(--signal-corner) - var(--signal-overlap));
+  top: calc(100% - var(--signal-line)); /* same as .tick.ht.bl / .br */
   right: calc(var(--signal-corner) - var(--signal-overlap));
-  width: auto;
+  left: auto;
   height: var(--signal-line);
-  transform: scaleX(0);
-  transform-origin: right center;
+  width: 0;
 }
 
 .signal-frame .e.left {
-  left: 0;
-  top: calc(var(--signal-corner) - var(--signal-overlap));
+  left: 0; /* same as .tick.vt.tl / .bl */
   bottom: calc(var(--signal-corner) - var(--signal-overlap));
+  top: auto;
   width: var(--signal-line);
-  height: auto;
-  transform: scaleY(0);
-  transform-origin: center bottom;
+  height: 0;
 }
 
 .signal-label {
@@ -384,23 +371,17 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .signal:hover .signal-frame .e.top,
-.signal:focus-visible .signal-frame .e.top {
+.signal:focus-visible .signal-frame .e.top,
+.signal:hover .signal-frame .e.bottom,
+.signal:focus-visible .signal-frame .e.bottom {
   width: var(--signal-mid);
 }
 
 .signal:hover .signal-frame .e.right,
-.signal:focus-visible .signal-frame .e.right {
-  height: var(--signal-mid);
-}
-
-.signal:hover .signal-frame .e.bottom,
-.signal:focus-visible .signal-frame .e.bottom {
-  transform: scaleX(1);
-}
-
+.signal:focus-visible .signal-frame .e.right,
 .signal:hover .signal-frame .e.left,
 .signal:focus-visible .signal-frame .e.left {
-  transform: scaleY(1);
+  height: var(--signal-mid);
 }
 
 .signal:hover .signal-label,
