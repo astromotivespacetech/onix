@@ -117,10 +117,15 @@
     submitBtn.disabled = true;
     setNote("Sending.");
 
-    var payload = new FormData(form);
-    var target = FORM_ENDPOINT || window.location.pathname;
+    /* Netlify Forms need urlencoded POST to "/". Multipart fetch often fails. */
+    var payload = new URLSearchParams(new FormData(form)).toString();
+    var target = FORM_ENDPOINT || "/";
 
-    fetch(target, { method: "POST", body: payload, headers: { Accept: "application/json" } })
+    fetch(target, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload
+    })
       .then(function (response) {
         if (!response.ok) throw new Error(String(response.status));
         form.reset();
