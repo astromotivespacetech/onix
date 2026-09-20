@@ -214,7 +214,7 @@ img, svg { display: block; max-width: 100%; }
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--ink-faint);
+  color: var(--ice);
 }
 
 .stat-value {
@@ -226,7 +226,7 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: -0.03em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  color: var(--ice);
+  color: #ffffff;
 }
 
 .stat-unit {
@@ -236,7 +236,7 @@ img, svg { display: block; max-width: 100%; }
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--ink-dim);
+  color: var(--ice);
 }
 
 @keyframes rise {
