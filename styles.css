@@ -249,6 +249,8 @@ img, svg { display: block; max-width: 100%; }
 .signal {
   --signal-line: 1px;
   --signal-corner: 11px;
+  --signal-overlap: 1px;
+  --signal-mid: calc(100% - 2 * (var(--signal-corner) - var(--signal-overlap)));
   --signal-ink: rgba(188, 212, 255, 0.55);
   --signal-stroke: #bcd4ff;
   position: relative;
@@ -261,6 +263,7 @@ img, svg { display: block; max-width: 100%; }
   background: transparent;
   color: var(--ink);
   cursor: pointer;
+  transform: translateZ(0);
 }
 
 .signal-frame {
@@ -271,7 +274,7 @@ img, svg { display: block; max-width: 100%; }
   opacity: 0.55;
 }
 
-/* Corner L-marks: same 1px fills as the mid-edges (no CSS borders). */
+/* Corner L-marks — top/left only so bottom/right rounding cannot diverge. */
 .signal-frame .c {
   position: absolute;
   width: var(--signal-corner);
@@ -291,7 +294,7 @@ img, svg { display: block; max-width: 100%; }
 
 .signal-frame .c.tr {
   top: 0;
-  right: 0;
+  left: calc(100% - var(--signal-corner));
   background-image:
     linear-gradient(var(--signal-stroke), var(--signal-stroke)),
     linear-gradient(var(--signal-stroke), var(--signal-stroke));
@@ -300,7 +303,7 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .signal-frame .c.bl {
-  bottom: 0;
+  top: calc(100% - var(--signal-corner));
   left: 0;
   background-image:
     linear-gradient(var(--signal-stroke), var(--signal-stroke)),
@@ -310,8 +313,8 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .signal-frame .c.br {
-  bottom: 0;
-  right: 0;
+  top: calc(100% - var(--signal-corner));
+  left: calc(100% - var(--signal-corner));
   background-image:
     linear-gradient(var(--signal-stroke), var(--signal-stroke)),
     linear-gradient(var(--signal-stroke), var(--signal-stroke));
@@ -319,50 +322,44 @@ img, svg { display: block; max-width: 100%; }
   background-position: bottom right, bottom right;
 }
 
-/* Mid-edges: each starts at a corner and grows clockwise.
-   Overlap 1px into both corner caps so joins stay continuous. */
+/*
+  Mid-edges grow clockwise with width/height (not scale).
+  Bottom stroke uses top: calc(100% - 1px) — same math as the bottom corners.
+*/
 .signal-frame .e {
-  --signal-overlap: 1px;
   position: absolute;
   background: var(--signal-stroke);
-  transition: transform 0.45s var(--ease);
+  transition: width 0.45s var(--ease), height 0.45s var(--ease);
 }
 
-.signal-frame .e.top,
-.signal-frame .e.bottom {
-  left: calc(var(--signal-corner) - var(--signal-overlap));
-  right: calc(var(--signal-corner) - var(--signal-overlap));
-  height: var(--signal-line);
-  transform: scaleX(0);
-}
-
-.signal-frame .e.left,
-.signal-frame .e.right {
-  top: calc(var(--signal-corner) - var(--signal-overlap));
-  bottom: calc(var(--signal-corner) - var(--signal-overlap));
-  width: var(--signal-line);
-  transform: scaleY(0);
-}
-
-/* Clockwise: TL→TR, TR→BR, BR→BL, BL→TL */
 .signal-frame .e.top {
   top: 0;
-  transform-origin: left center;
+  left: calc(var(--signal-corner) - var(--signal-overlap));
+  height: var(--signal-line);
+  width: 0;
 }
 
 .signal-frame .e.right {
-  right: 0;
-  transform-origin: center top;
+  top: calc(var(--signal-corner) - var(--signal-overlap));
+  left: calc(100% - var(--signal-line));
+  width: var(--signal-line);
+  height: 0;
 }
 
 .signal-frame .e.bottom {
-  bottom: 0;
-  transform-origin: right center;
+  top: calc(100% - var(--signal-line));
+  right: calc(var(--signal-corner) - var(--signal-overlap));
+  left: auto;
+  height: var(--signal-line);
+  width: 0;
 }
 
 .signal-frame .e.left {
   left: 0;
-  transform-origin: center bottom;
+  bottom: calc(var(--signal-corner) - var(--signal-overlap));
+  top: auto;
+  width: var(--signal-line);
+  height: 0;
 }
 
 .signal-label {
@@ -378,17 +375,17 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .signal:hover .signal-frame .e.top,
-.signal:hover .signal-frame .e.bottom,
 .signal:focus-visible .signal-frame .e.top,
+.signal:hover .signal-frame .e.bottom,
 .signal:focus-visible .signal-frame .e.bottom {
-  transform: scaleX(1);
+  width: var(--signal-mid);
 }
 
-.signal:hover .signal-frame .e.left,
 .signal:hover .signal-frame .e.right,
-.signal:focus-visible .signal-frame .e.left,
-.signal:focus-visible .signal-frame .e.right {
-  transform: scaleY(1);
+.signal:focus-visible .signal-frame .e.right,
+.signal:hover .signal-frame .e.left,
+.signal:focus-visible .signal-frame .e.left {
+  height: var(--signal-mid);
 }
 
 .signal:hover .signal-label,
