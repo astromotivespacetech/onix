@@ -4,7 +4,8 @@
 (function () {
   "use strict";
 
-  var FORM_ENDPOINT = "";
+  /* GitHub Pages does not store form posts. Formspree emails the message. */
+  var FORM_ENDPOINT = "https://formspree.io/f/mzedvyzb";
   var data = window.SITE_DATA || {};
 
   function get(path) {
@@ -114,16 +115,23 @@
       return;
     }
 
+    if (!FORM_ENDPOINT) {
+      setNote("The contact form is not connected.", "error");
+      return;
+    }
+
     submitBtn.disabled = true;
     setNote("Sending.");
 
-    /* Netlify Forms: urlencoded POST to a static HTML file Netlify scanned. */
     var payload = new URLSearchParams(new FormData(form)).toString();
-    var target = FORM_ENDPOINT || "/form.html";
+    var target = FORM_ENDPOINT;
 
     fetch(target, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       body: payload
     })
       .then(function (response) {
